@@ -16,7 +16,7 @@ variables:
 steps:
 - task: CmdLine@2
   inputs:
-    script: 'make all' 
+    script: 'make all MYSQL_ROOT_PASSWORD=$(MYSQL_ROOT_PASSWORD)' 
 
 - task: CmdLine@2
   condition: and(succeeded(), eq(variables.isMain, true))
