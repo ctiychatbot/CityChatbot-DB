@@ -8,6 +8,8 @@ DOCKER_TAG=latest
 DOCKER_IMG=$(DOCKER_NAME):$(DOCKER_TAG)
 REMOTE_IMG:=docker.io/umgccaps/$(DOCKER_IMG)
 
+BUILD_ARGS=--build-arg MYSQL_ROOT_PASSWORD=$(MYSQL_ROOT_PASSWORD)
+
 # PHONY
 .PHONY: all start clear push help
 
@@ -17,7 +19,7 @@ REMOTE_IMG:=docker.io/umgccaps/$(DOCKER_IMG)
 #
 ####################################################################
 all:
-	docker build -f ./docker/Dockerfile -t $(DOCKER_IMG) .
+	docker build -f ./docker/Dockerfile $(BUILD_ARGS) -t $(DOCKER_IMG) .
 
 ####################################################################
 #	make start:
@@ -25,8 +27,16 @@ all:
 #
 ####################################################################
 start:
-	docker run --net=host --rm -d --name mysql $(DOCKER_IMG)
+	docker run -p 3306:3306 --rm -d --name mysql $(DOCKER_IMG)
 
+####################################################################
+#	make stop:
+#		This stops the mysql docker image. 
+#
+####################################################################
+stop:
+	docker stop mysql
+	
 ####################################################################
 #	make push:
 #		This pushes the Docker image to $(REMOTE_IMG)
