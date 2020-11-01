@@ -7,8 +7,11 @@ DOCKER_NAME=chatbot-db
 DOCKER_TAG=latest
 DOCKER_IMG=$(DOCKER_NAME):$(DOCKER_TAG)
 REMOTE_IMG:=docker.io/umgccaps/$(DOCKER_IMG)
+BUILD_IMG=docker.io/umgccaps/advance-development-factory:latest
 
 BUILD_ARGS=--build-arg MYSQL_ROOT_PASSWORD="$(MYSQL_ROOT_PASSWORD)"
+
+URL=municipal-permit-chabot-db
 
 # PHONY
 .PHONY: all start clear push help
@@ -45,6 +48,29 @@ stop:
 push:
 	docker tag $(DOCKER_IMG) $(REMOTE_IMG)
 	docker push $(REMOTE_IMG)
+
+
+deploy:
+	docker run -v $(PWD)/:/repo --entrypoint '/bin/bash' $(BUILD_IMG) \
+		-c 'cd /repo && az login && az group create --name devTestGroup --location eastus && \
+			az deployment group create --resource-group devTestGroup \
+			--template-file azure/deploy-template.json \
+			--parameter azure/deploy-parameters.json \
+			--parameter imageName=$(REMOTE_IMG) \
+			--parameter dnsNameLabel=$(URL)' 
+	@$(info $(REMOTE_IMG) deployed to $(URL).eastus.azurecontainer.io)
+	@$(info This may take a few minutes to respond)
+
+
+##############################################################
+#	make stop-deploy:
+#		This stops the Azure container instances.
+#
+##############################################################
+stop-deploy:
+	docker run -v $(PWD)/:/repo --entrypoint '/bin/bash' $(BUILD_IMG) \
+		-c 'cd /repo && az login && az group delete --name devTestGroup --yes'
+
 
 # This prints make commands and usage
 help:
