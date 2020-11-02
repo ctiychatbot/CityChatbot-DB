@@ -9,7 +9,7 @@ DOCKER_IMG=$(DOCKER_NAME):$(DOCKER_TAG)
 REMOTE_IMG:=docker.io/umgccaps/$(DOCKER_IMG)
 BUILD_IMG=docker.io/umgccaps/advance-development-factory:latest
 
-BUILD_ARGS=--build-arg MYSQL_ROOT_PASSWORD="$(MYSQL_ROOT_PASSWORD)"
+BUILD_ARGS=--build-arg MYSQL_ROOT_PASSWORD=$(MYSQL_ROOT_PASSWORD)
 
 URL=municipal-permit-chabot-db
 
