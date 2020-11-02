@@ -11,7 +11,7 @@ BUILD_IMG=docker.io/umgccaps/advance-development-factory:latest
 
 BUILD_ARGS=--build-arg MYSQL_ROOT_PASSWORD=$(MYSQL_ROOT_PASSWORD)
 
-URL=municipal-permit-chabot-db
+URL=municipal-permit-chabot-db-test-again
 
 # PHONY
 .PHONY: all start clear push help
@@ -55,7 +55,9 @@ deploy:
 		-c 'cd /repo && az login && az group create --name devTestGroup --location eastus && \
 			az deployment group create --resource-group devTestGroup \
 			--template-file azure/template.json \
-			--parameter azure/parameters.json'
+			--parameter azure/parameters.json \
+			--parameter imageName=$(REMOTE_IMG) \
+			--parameter dnsNameLabel=$(URL)'
 	@$(info $(REMOTE_IMG) deployed to $(URL).eastus.azurecontainer.io)
 	@$(info This may take a few minutes to respond)
 

@@ -3,7 +3,7 @@
     "contentVersion": "1.0.0.0",
     "parameters": {
         "containerName": {
-            "value": "umgc-municipal-chatbot-db-00"
+            "value": "umgc-municipal-chatbot-db"
         },
         "location": {
             "value": "eastus"
