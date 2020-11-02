@@ -11,7 +11,7 @@ BUILD_IMG=docker.io/umgccaps/advance-development-factory:latest
 
 BUILD_ARGS=--build-arg MYSQL_ROOT_PASSWORD=$(MYSQL_ROOT_PASSWORD)
 
-URL=municipal-permit-chabot-db-test-again
+URL=municipal-permit-chabot-db
 
 # PHONY
 .PHONY: all start clear push help
