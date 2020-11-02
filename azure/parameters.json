@@ -2,11 +2,11 @@
     "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
     "contentVersion": "1.0.0.0",
     "parameters": {
+        "containerName": {
+            "value": "umgc-municipal-chatbot-db"
+        },
         "location": {
             "value": "eastus"
-        },
-        "containerName": {
-            "value": "chatbot-db"
         },
         "imageType": {
             "value": "Public"
@@ -24,7 +24,7 @@
             "value": "1.5"
         },
         "restartPolicy": {
-            "value": "Always"
+            "value": "OnFailure"
         },
         "ipAddressType": {
             "value": "Public"
@@ -36,12 +36,13 @@
                     "protocol": "TCP"
                 },
                 {
-                    "port": "3306"
+                    "port": "3306",
+                    "protocol": "TCP"
                 }
             ]
         },
         "dnsNameLabel": {
-            "value": "chatbot-db"
+            "value": "municipal-permit-chabot-db-00"
         }
     }
 }

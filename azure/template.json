@@ -3,59 +3,58 @@
     "contentVersion": "1.0.0.0",
     "parameters": {
         "location": {
-            "type": "String"
+            "type": "string"
         },
         "containerName": {
-            "type": "String"
+            "type": "string"
         },
         "imageType": {
+            "type": "string",
             "allowedValues": [
                 "Public",
                 "Private"
-            ],
-            "type": "String"
+            ]
         },
         "imageName": {
-            "type": "String"
+            "type": "string"
         },
         "osType": {
+            "type": "string",
             "allowedValues": [
                 "Linux",
                 "Windows"
-            ],
-            "type": "String"
+            ]
         },
         "numberCpuCores": {
-            "type": "String"
+            "type": "string"
         },
         "memory": {
-            "type": "String"
+            "type": "string"
         },
         "restartPolicy": {
+            "type": "string",
             "allowedValues": [
                 "OnFailure",
                 "Always",
                 "Never"
-            ],
-            "type": "String"
+            ]
         },
         "ipAddressType": {
-            "type": "String"
+            "type": "string"
         },
         "ports": {
-            "type": "Array"
+            "type": "array"
         },
         "dnsNameLabel": {
-            "type": "String"
+            "type": "string"
         }
     },
     "resources": [
         {
+            "location": "[parameters('location')]",
+            "name": "[parameters('containerName')]",
             "type": "Microsoft.ContainerInstance/containerGroups",
             "apiVersion": "2018-10-01",
-            "name": "[parameters('containerName')]",
-            "location": "[parameters('location')]",
-            "tags": {},
             "properties": {
                 "containers": [
                     {
@@ -79,7 +78,8 @@
                     "ports": "[parameters('ports')]",
                     "dnsNameLabel": "[parameters('dnsNameLabel')]"
                 }
-            }
+            },
+            "tags": {}
         }
     ]
 }
